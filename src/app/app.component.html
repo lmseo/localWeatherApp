@@ -1,9 +1,10 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Local Weather
-  </h1>
-  <div>Get your local forecast, right now!</div>
-  <h2>Current Weather</h2>
-  <app-current-weather></app-current-weather>
+<mat-toolbar color="primary">
+  Local Weather
+</mat-toolbar>
+<div fxLayout="row wrap" fxLayoutGap="0" fxLayoutAlign="flex-start">
+  <mat-card fxFlex="800px">
+    <app-current-weather></app-current-weather>
+    <app-forecast-weather></app-forecast-weather>
+  </mat-card>
 </div>

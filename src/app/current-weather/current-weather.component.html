@@ -1,13 +1,18 @@
+<mat-card-title>Current Weather in  <span>{{current.city}}, {{current.country}}</span></mat-card-title>
 <div>
   <div>
-    <span>{{current.city}}, {{current.country}}   </span>
-    <span>{{current.date | date: 'full'}}</span>
+    <span>{{current.date | date: 'medium'}}</span>
   </div>
   <div>
-    <img src="{{current.image}}" alt="{{current.description}}" width="20" height="20">
-    <span>{{current.temperature | number: '1.0-0'}}°F</span>
+    <div>
+      <div class="temperature">
+        {{current.temperature | number: '1.0-0'}}°F
+      </div>
+      <div>
+        {{current.description}}
+      </div>
+    </div>
+    <img src="{{current.image}}" alt="{{current.description}}" width="50" height="50">
   </div>
-  <div>
-    {{current.description}}
-  </div>
+
 </div>

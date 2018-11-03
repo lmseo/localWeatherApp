@@ -2,39 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import { ICurrentWeather } from './current-weather.interface';
+import { ICurrentWeatherData } from './current-weather-data.interface';
+import { TemperatureService } from '../shared/services/temperature.service';
 
-interface ICurrentWeatherData {
-  weather: [
-    {
-      description: string;
-      icon: string;
-    }
-  ];
-  wind: {
-    deg: number;
-    speed: number;
-  };
-  main: {
-    temp: number;
-    tempMax: number;
-    tempMin: number;
-    humidity: number;
-    pressure: number;
-  };
-  sys: {
-    country: string;
-    sunrise: number;
-    sunset: number;
-  };
-  dt: number;
-  name: string;
-  id: number;
-}
 @Injectable()
-export class WeatherService {
-  weather = {
+export class CurrentWeatherService {
+  sample = {
     coord: { lon: -0.13, lat: 51.51 },
     weather: [
       { id: 801, main: 'Clouds', description: 'few clouds', icon: '02n' }
@@ -63,9 +38,7 @@ export class WeatherService {
     name: 'London',
     cod: 200
   };
-  constructor(private httpClient: HttpClient) {
-    console.log(this.weather.dt);
-  }
+  constructor(private httpClient: HttpClient) {}
 
   getCurrentWeather(city: string, country: string) {
     return this.httpClient
@@ -85,12 +58,8 @@ export class WeatherService {
       country: data.sys.country,
       date: new Date(data.dt * 1000),
       image: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
-      temperature: this.convertKelvinToFarenheit(data.main.temp),
+      temperature: TemperatureService.convertKelvinToFarenheit(data.main.temp),
       description: data.weather[0].description
     };
-  }
-
-  private convertKelvinToFarenheit(kelvin: number) {
-    return kelvin * (9 / 5) - 459.67;
   }
 }
