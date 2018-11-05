@@ -1,0 +1,15 @@
+<agm-map
+  [latitude]="lat"
+  [longitude]="lon"
+  [zoom]="12"
+  (mapClick)="onChosenLocation($event)"
+  (zoomChange)="onZoomChanged($event)"
+>
+  <agm-marker [longitude]="lon" [latitude]="lat" ></agm-marker>
+</agm-map>
+<div>
+  <div>Latitude: {{lat}}</div>
+  <div>Longitude: {{lon}}</div>
+</div>
+<!--(centerChange)="onCenterChanged($event)"-->
+<!--(idle)="onIdle()"-->
