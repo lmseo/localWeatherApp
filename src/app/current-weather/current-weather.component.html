@@ -1,18 +1,23 @@
-<mat-card-title>Current Weather in  <span>{{current.city}}, {{current.country}}</span></mat-card-title>
+<mat-card-title
+  >Current Weather in
+  <span>{{ current.city }}, {{ current.country }}</span></mat-card-title
+>
 <div>
   <div>
-    <span>{{current.date | date: 'medium'}}</span>
+    <span>{{ current.date | date: 'medium' }}</span>
   </div>
   <div>
     <div>
       <div class="temperature">
-        {{current.temperature | number: '1.0-0'}}°F
+        {{ current.temperature | number: '1.0-0' }}°F
       </div>
-      <div>
-        {{current.description}}
-      </div>
+      <div>Currently: {{ current.description }}</div>
     </div>
-    <img src="{{current.image}}" alt="{{current.description}}" width="50" height="50">
+    <img
+      src="{{current.image}}"
+      alt="{{current.description}}"
+      width="50"
+      height="50"
+    />
   </div>
-
 </div>

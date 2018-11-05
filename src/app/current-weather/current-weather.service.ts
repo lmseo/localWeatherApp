@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { ICurrentWeather } from './current-weather.interface';
 import { ICurrentWeatherData } from './current-weather-data.interface';
 import { TemperatureService } from '../shared/services/temperature.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CurrentWeatherService {
@@ -40,10 +41,25 @@ export class CurrentWeatherService {
   };
   constructor(private httpClient: HttpClient) {}
 
-  getCurrentWeather(city: string, country: string) {
+  getCurrentWeatherByCity(
+    city: string,
+    country: string
+  ): Observable<ICurrentWeather> {
     return this.httpClient
       .get<ICurrentWeatherData>(
         `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${
+          environment.openweathermap.appId
+        }`
+      )
+      .pipe(map(data => this.transformToICurrentWeather(data)));
+  }
+  getCurrentWeatherByLatLong(
+    lat: number,
+    lon: number
+  ): Observable<ICurrentWeather> {
+    return this.httpClient
+      .get<ICurrentWeatherData>(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${
           environment.openweathermap.appId
         }`
       )

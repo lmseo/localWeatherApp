@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { WeatherForecastService } from './weather-forecast.service';
+import { CoordinatesService } from '../shared/services/coordinates.service';
 
 @Component({
   selector: 'app-forecast-weather',
@@ -9,51 +10,58 @@ import { WeatherForecastService } from './weather-forecast.service';
 })
 export class WeatherForecastComponent implements OnInit {
   chart = [];
-  constructor(private forecastService: WeatherForecastService) {}
+  constructor(
+    private forecastService: WeatherForecastService,
+    private coordsService: CoordinatesService
+  ) {}
 
   ngOnInit() {
-    this.forecastService
-      .get5DayWeatherForecast('san gabriel', 'US')
-      .subscribe(res => {
-        this.chart = new Chart('canvas', {
-          type: 'line',
-          data: {
-            labels: res.weatherDates,
-            datasets: [
-              {
-                data: res.temperatureMax,
-                borderColor: '#3cba9f',
-                fill: false
-              }
-              // {
-              //   data: res.temperatureMin,
-              //   borderColor: '#ffcc00',
-              //   fill: false
-              // }
-            ]
-          },
-          options: {
-            legend: {
-              display: false
-            },
-            scales: {
-              xAxes: [
-                {
-                  display: true,
-                  type: 'time',
-                  time: {
-                    unit: 'day'
+    this.coordsService.coordInfo$.subscribe(coords => {
+      if (coords) {
+        this.forecastService
+          .get5DayWeatherForecastByLatLon(coords.latitude, coords.longitute)
+          .subscribe(res => {
+            this.chart = new Chart('canvas', {
+              type: 'line',
+              data: {
+                labels: res.weatherDates,
+                datasets: [
+                  {
+                    data: res.temperatureMax,
+                    borderColor: '#3cba9f',
+                    fill: false
                   }
+                  // {
+                  //   data: res.temperatureMin,
+                  //   borderColor: '#ffcc00',
+                  //   fill: false
+                  // }
+                ]
+              },
+              options: {
+                legend: {
+                  display: false
+                },
+                scales: {
+                  xAxes: [
+                    {
+                      display: true,
+                      type: 'time',
+                      time: {
+                        unit: 'day'
+                      }
+                    }
+                  ],
+                  yAxes: [
+                    {
+                      display: true
+                    }
+                  ]
                 }
-              ],
-              yAxes: [
-                {
-                  display: true
-                }
-              ]
-            }
-          }
-        });
-      });
+              }
+            });
+          });
+      }
+    });
   }
 }

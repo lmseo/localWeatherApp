@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ICurrentWeather } from './current-weather.interface';
 import { CurrentWeatherService } from './current-weather.service';
 import { Chart } from 'chart.js';
+import { CoordinatesService } from '../shared/services/coordinates.service';
 
 @Component({
   selector: 'app-current-weather',
@@ -10,9 +11,13 @@ import { Chart } from 'chart.js';
 })
 export class CurrentWeatherComponent implements OnInit {
   current: ICurrentWeather;
-  chart = [];
+  lat = 0;
+  lon = 0;
 
-  constructor(private weatherService: CurrentWeatherService) {}
+  constructor(
+    private weatherService: CurrentWeatherService,
+    private coordsService: CoordinatesService
+  ) {}
 
   ngOnInit() {
     this.current = {
@@ -23,10 +28,15 @@ export class CurrentWeatherComponent implements OnInit {
       temperature: 72,
       description: 'sunny'
     } as ICurrentWeather;
-    this.weatherService
-      .getCurrentWeather('san gabriel', 'US')
-      .subscribe(data => {
-        this.current = data;
-      });
+
+    this.coordsService.coordInfo$.subscribe(coords => {
+      if (coords) {
+        this.weatherService
+          .getCurrentWeatherByLatLong(coords.latitude, coords.longitute)
+          .subscribe(data => {
+            this.current = data;
+          });
+      }
+    });
   }
 }

@@ -1,4 +1,4 @@
-export class IWeatherForecast {
+export interface IWeatherForecast {
   temperatureMax: [];
   temperatureMin: [];
   weatherDates: Date[];
