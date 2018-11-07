@@ -13,4 +13,11 @@ export class MapService {
       }`
     );
   }
+  getCurrentCityByCity(lat: number, lon: number) {
+    return this.httpClient.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${
+        environment.agm.apiKey
+      }`
+    );
+  }
 }

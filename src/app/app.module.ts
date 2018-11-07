@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,21 +15,25 @@ import { MapComponent } from './map/map.component';
 import { environment } from '../environments/environment';
 import { MapService } from './map/map.service';
 import { CoordinatesService } from './shared/services/coordinates.service';
+import { SearchCityComponent } from './search-city/search-city.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CurrentWeatherComponent,
     WeatherForecastComponent,
-    MapComponent
+    MapComponent,
+    SearchCityComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     MaterialModule,
+    ReactiveFormsModule,
     AgmCoreModule.forRoot({
-      apiKey: environment.agm.apiKey
+      apiKey: environment.agm.apiKey,
+      libraries: ['places']
     })
   ],
   providers: [

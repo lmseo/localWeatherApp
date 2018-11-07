@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import {
   MatButtonModule,
   MatCardModule,
+  MatFormFieldModule,
   MatIconModule,
+  MatInputModule,
   MatToolbarModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,7 +17,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatIconModule,
     MatCardModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
     MatButtonModule,
@@ -23,7 +27,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatIconModule,
     MatCardModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   declarations: []
 })

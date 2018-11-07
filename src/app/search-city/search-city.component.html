@@ -1,0 +1,11 @@
+<form [formGroup]="searchForm" (ngSubmit)="getNewCity($event)">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="City State, Country"
+      [formControl]="searchInput"
+      [value]="searchInputData"
+      #search
+    />
+  </mat-form-field>
+</form>

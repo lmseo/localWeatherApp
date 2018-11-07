@@ -1,5 +1,9 @@
 export class CoordinatesInfo {
-  constructor(public latitude: number, public longitute: number) {}
+  constructor(
+    public latitude: number = null,
+    public longitute: number = null,
+    public city: string = null
+  ) {}
 
   areCoordsSet() {
     return !!(this.latitude && this.longitute);
