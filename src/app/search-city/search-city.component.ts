@@ -10,7 +10,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { CoordinatesService } from '../shared/services/coordinates.service';
 import { MapsAPILoader } from '@agm/core';
 import { MapService } from '../map/map.service';
-import { SearchCityService } from './search-city.service';
 import AutocompletePrediction = google.maps.places.AutocompletePrediction;
 
 @Component({
@@ -25,7 +24,6 @@ export class SearchCityComponent implements OnInit {
 
   constructor(
     private coordsService: CoordinatesService,
-    private searchCityService: SearchCityService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private mapService: MapService
@@ -56,7 +54,6 @@ export class SearchCityComponent implements OnInit {
           { input: value, sessionToken: sessionToken },
           res => {
             this.options = res.slice(0);
-            console.log(this.options);
           }
         );
       });
