@@ -3,9 +3,16 @@
     <input
       matInput
       placeholder="City State, Country"
-      [formControl]="searchInput"
-      [value]="searchInputData"
+      formControlName="searchInput"
+      (keyup)="onCityInput(search.value)"
+      (blur)="onBlurIbput()"
+      [matAutocomplete]="auto"
       #search
     />
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of options" [value]="option.description">
+        {{ option.description }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 </form>

@@ -22,13 +22,12 @@ export class MapService {
       );
   }
   private transformtoISearchCity(data, lat, lon): ISearchCityInterface {
-    const city = data.results.filter(
-      res => res.types[0] === 'locality' && res.types[1] === 'political'
-    );
+    const city = data.results[0];
+
     return {
       lat: lat,
       lon: lon,
-      city: city[0].formatted_address
+      city: typeof city === 'undefined' ? null : city.formatted_address
     };
   }
 }

@@ -10,35 +10,6 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class CurrentWeatherService {
-  sample = {
-    coord: { lon: -0.13, lat: 51.51 },
-    weather: [
-      { id: 801, main: 'Clouds', description: 'few clouds', icon: '02n' }
-    ],
-    base: 'stations',
-    main: {
-      temp: 273.42,
-      pressure: 1007,
-      humidity: 86,
-      temp_min: 270.15,
-      temp_max: 277.15
-    },
-    visibility: 10000,
-    wind: { speed: 1.5, deg: 80 },
-    clouds: { all: 24 },
-    dt: 1540966800,
-    sys: {
-      type: 1,
-      id: 5091,
-      message: 0.0059,
-      country: 'GB',
-      sunrise: 1540968750,
-      sunset: 1541003696
-    },
-    id: 2643743,
-    name: 'London',
-    cod: 200
-  };
   constructor(private httpClient: HttpClient) {}
 
   getCurrentWeatherByCity(

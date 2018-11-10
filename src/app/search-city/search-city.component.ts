@@ -10,6 +10,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { CoordinatesService } from '../shared/services/coordinates.service';
 import { MapsAPILoader } from '@agm/core';
 import { MapService } from '../map/map.service';
+import { SearchCityService } from './search-city.service';
+import AutocompletePrediction = google.maps.places.AutocompletePrediction;
 
 @Component({
   selector: 'app-search-city',
@@ -18,53 +20,51 @@ import { MapService } from '../map/map.service';
 })
 export class SearchCityComponent implements OnInit {
   searchForm: FormGroup;
-  searchInputData: string;
-
   @ViewChild('search') public searchElementRef: ElementRef;
+  options: AutocompletePrediction[];
 
   constructor(
     private coordsService: CoordinatesService,
+    private searchCityService: SearchCityService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private mapService: MapService
   ) {}
 
   ngOnInit() {
+    this.searchForm = new FormGroup({
+      searchInput: new FormControl()
+    });
     this.coordsService.coordInfo$.subscribe(coords => {
       if (coords) {
         this.mapService
           .getCurrentCityByLatLon(coords.latitude, coords.longitute)
           .subscribe(data => {
-            this.searchInputData = data.city;
+            this.searchInput.patchValue(data.city);
+            console.log(data.city);
           });
       }
     });
-    this.searchForm = new FormGroup({
-      searchInput: new FormControl()
-    });
-
-    this.mapsAPILoader.load().then(data => {
-      const autocomplete = new google.maps.places.Autocomplete(
-        this.searchElementRef.nativeElement
-      );
-      autocomplete.addListener('place_changed', event => {
-        this.ngZone.run(arg => {
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-          // checking for proper data returned
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-
-          this.coordsService.setLonLat(
-            place.geometry.location.lat(),
-            place.geometry.location.lng()
-          );
-        });
-      });
-    });
   }
+  onCityInput(value: string) {
+    if (String(value).length > 4) {
+      const sessionToken = new google.maps.places.AutocompleteSessionToken();
+      this.mapsAPILoader.load().then(() => {
+        const autocomplete = new google.maps.places.AutocompleteService();
 
+        autocomplete.getPlacePredictions(
+          { input: value, sessionToken: sessionToken },
+          res => {
+            this.options = res.slice(0);
+            console.log(this.options);
+          }
+        );
+      });
+    }
+  }
+  onBlurIbput() {
+    this.options = null;
+  }
   get searchInput() {
     return this.searchForm.get('searchInput');
   }

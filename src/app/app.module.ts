@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
 import { MapService } from './map/map.service';
 import { CoordinatesService } from './shared/services/coordinates.service';
 import { SearchCityComponent } from './search-city/search-city.component';
+import { SearchCityService } from './search-city/search-city.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SearchCityComponent } from './search-city/search-city.component';
     CurrentWeatherService,
     WeatherForecastService,
     MapService,
-    CoordinatesService
+    CoordinatesService,
+    SearchCityService
   ],
   bootstrap: [AppComponent]
 })
